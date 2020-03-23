@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Frame" name="GameUI/UIContainer/FullscreenLowerContainer" file="GameUI">
+
+        <Frame type="Frame" name="RPGGameUI">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="ProgressBar" name="UnitStatProgressBar">
+        <Height val="50"/>
+
+        <UseFillContainer val="True"/>
+    </Frame>
+
+    <Frame type="Frame" name="UnitStatusBarTemplate">
+        <Width val="300"/>
+        <Height val="150"/>
+
+        <!-- Dummy Frame -->
+        
+        <Frame type="UnitFrame" name="UnitFrame">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+
+            <Visible val="False"/>
+        </Frame>
+
+        <!-- Background Stuff -->
+
+        <Frame type="Image" name="Background">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+
+            <Texture val="Assets\Textures\ui_frame_default_terran.dds"/>
+            <TextureType val="Border"/>
+        </Frame>
+
+        <Frame type="Frame" name="ContainerPanel">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="10"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="-10"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="-10"/>
+        </Frame>
+
+        <!-- Status Bars -->
+
+        <Frame type="ProgressBar" name="HPBar" template="UnammedRPGGame_GameUI/UnitStatProgressBar">
+            <Anchor side="Top" relative="$parent/ContainerPanel" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent/ContainerPanel" pos="Min" offset="0"/>
+            <Anchor side="Right" relative="$parent/ContainerPanel" pos="Max" offset="0"/>
+
+            <MaxValue val="{$parent/UnitFrame/@MaxHealth}"/>
+            <Value val="{$parent/UnitFrame/@CurrentHealth}"/>
+        </Frame>
+    </Frame>
+</Desc>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <!-- Standard Template -->
+    <Frame type="ProgressBar" name="UnitStatusBarTemplate">
+        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+
+        <CollapseLayout val="True"/>
+        <UseFillContainer val="True"/>
+        <Height val="30"/>
+        <Visible val="True"/>
+
+        <StateGroup name="VisibilityState">
+
+            <State name="NotVisible">
+                <When type="Property" frame="$this" operator="Equal" Value="0"/>
+
+                <Action type="SetProperty" frame="$this" Visible="False"/>
+            </State>
+
+            <State name="Visible">
+                <Action type="SetProperty" frame="$this" Visible="True"/>
+            </State>
+        </StateGroup>
+
+        <Frame type="Frame" name="FillImageContainer">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+
+            <Frame type="Image" name="FillImage">
+                <Anchor relative="$parent/$parent"/>
+
+                <Texture val="Assets\Textures\sc2_ui_userprofile_summary_progressbar_fill.dds"/>
+                <TextureType val="NineSlice"/>
+                <ColorAdjustMode val="Colorize"/>
+                <DarkAdjustColor val="0,0,0"/>
+                <LightAdjustColor val="0,0,0"/>
+            </Frame>
+        </Frame>
+
+    </Frame>
+
+    <!-- HealthBar Template -->
+    <Frame type="ProgressBar" name="UnitHealthBarTemplate" template="KL_UnitStatus/UnitStatusBarTemplate">
+        <MinValue val="0"/>
+
+        <Frame type="Frame" name="FillImageContainer">
+
+            <Frame type="Image" name="FillImage">
+                <DarkAdjustColor val="0,255,0"/>
+                <LightAdjustColor val="255,255,255"/>
+            </Frame>
+        </Frame>
+    </Frame>
+
+    <!-- EnergyBar Template -->
+    <Frame type="ProgressBar" name="UnitEnergyBarTemplate" template="KL_UnitStatus/UnitStatusBarTemplate">
+        <MinValue val="0"/>
+        <Height val="20"/>
+
+        <Frame type="Frame" name="FillImageContainer">
+            <Frame type="Image" name="FillImage">
+                <DarkAdjustColor val="150,40,220"/>
+                <LightAdjustColor val="255,255,255"/>
+            </Frame>
+        </Frame>
+    </Frame>
+
+    <!-- ShieldBar Template -->
+    <Frame type="ProgressBar" name="UnitShieldBarTemplate" template="KL_UnitStatus/UnitStatusBarTemplate">
+        <MinValue val="0"/>
+
+        <Frame type="Frame" name="FillImageContainer">
+            <Frame type="Image" name="FillImage">
+                <DarkAdjustColor val="0096ff"/>
+                <LightAdjustColor val="255,255,255"/>
+            </Frame>
+        </Frame>
+    </Frame>
+</Desc>

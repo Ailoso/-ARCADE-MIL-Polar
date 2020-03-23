@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Constant name="ActiveColor" val="60,190,114"/>
+    <Constant name="InactiveColor" val="40,125,75"/>
+
+    <!-- Required Templates -->
+
+    <!-- New Frames -->
+
+    <Frame type="Frame" name="GameUI/UIContainer/ConsoleUIContainer" file="GameUI">
+
+        <Frame type="Image" name="StatusPanelBackground">
+            <Anchor side="Top" relative="$parent/StatusPanel" pos="Min" offset="-27"/>
+            <Anchor side="Bottom" relative="$parent/StatusPanel" pos="Max" offset="21"/>
+            <Anchor side="Left" relative="$parent/StatusPanel" pos="Min" offset="-28"/>
+            <Anchor side="Right" relative="$parent/StatusPanel" pos="Max" offset="28"/>
+
+            <Texture val="Assets\Textures\ui_frame_default_terran.dds"/>
+            <TextureType val="Border"/>
+            <Visible val="{$parent/StatusPanel/@Visible}"/>
+        </Frame>
+
+        <Frame type="UnitStatusFrame" name="StatusPanel">
+            <Anchor side="Top" relative="$parent/ControlGroupPanel" pos="Min" offset="-55"/>
+            <Anchor side="Bottom" relative="$this/EnergyBar" pos="Max" offset="0"/>
+            <Anchor side="Left" relative="$parent/InfoPanelBackground" pos="Mid" offset="0"/>
+            <Anchor side="Right" relative="$parent/InfoPanelBackground" pos="Mid" offset="0"/>
+
+            <Width val="455"/>
+
+            <StateGroup name="DynamicResize">
+                <DefaultState val="Default"/>
+            
+                <State name="ShieldActive">
+                    <When type="Property" frame="$this/EnergyBar" Visible="True"/>
+
+                    <Action type="SetAnchor" frame="$this" side="Top" relative="$parent/ControlGroupPanel" pos="Min" offset="-74"/>
+                </State>
+            
+                <State name="Default">
+                    <Action type="SetAnchor" frame="$this" side="Top" relative="$parent/ControlGroupPanel" pos="Min" offset="-55"/>
+                </State>
+            </StateGroup>
+
+            <Frame type="UnitFrame" name="UnitFrame">
+                <Anchor relative="$parent"/>
+
+                <UnitTag val="{$parent/@UnitTag}"/>
+            </Frame>
+
+            <Frame type="ProgressBar" name="HealthBar" template="KL_UnitStatus/UnitHealthBarTemplate">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/ShieldBar/FillImageContainer" pos="Min" offset="4"/>
+
+                <MinValue val="0"/>
+                <MaxValue val="{$parent/UnitFrame/@MaxHealth}"/>
+                <Value val="{$parent/UnitFrame/@CurrentHealth}"/>
+
+                <Frame type="Frame" name="FillImageContainer">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                </Frame>
+            </Frame>
+
+            <Frame type="ProgressBar" name="ShieldBar" template="KL_UnitStatus/UnitShieldBarTemplate">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+
+                <MinValue val="0"/>
+                <MaxValue val="{$parent/UnitFrame/@MaxShields}"/>
+                <Value val="{$parent/UnitFrame/@CurrentShields}"/>
+
+                <Frame type="Frame" name="FillImageContainer">
+                    <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                </Frame>
+                
+                <StateGroup name="VisibilityState">
+
+                    <State name="NotVisible">
+                        <When type="Property" frame="$this" operator="Equal" Value="0"/>
+
+                        <Action type="SetProperty" frame="$this" Visible="False"/>
+                        <Action type="SetAnchor" frame="$parent/HealthBar" side="Right" relative="$parent" pos="Max" offset="4"/>
+                    </State>
+
+                    <State name="Visible">
+                        <Action type="SetAnchor" frame="$parent/HealthBar" side="Right" relative="$parent/ShieldBar/FillImageContainer" pos="Min" offset="-4"/>
+                    </State>
+                </StateGroup>
+            </Frame>
+
+            <Frame type="ProgressBar" name="EnergyBar" template="KL_UnitStatus/UnitEnergyBarTemplate">
+                <Anchor side="Top" relative="$parent/HealthBar" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+
+                <Frame type="Frame" name="FillImageContainer">
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                </Frame>
+
+                <MaxValue val="{$parent/UnitFrame/@MaxEnergy}"/>
+                <Value val="{$parent/UnitFrame/@CurrentEnergy}"/>
+            </Frame>
+
+            <StateGroup name="StateGroup1">
+                <DefaultState val="NotVisible"/>
+            
+                <State name="Visible">
+                    <When type="Property" frame="$parent/InfoPanel/UnitPanel" Visible="True"/>
+
+                    <Action type="SetProperty" frame="$this" Visible="True"/>
+                </State>
+            
+                <State name="NotVisible">
+                    <Action type="SetProperty" frame="$this" Visible="False"/>
+                    <Action type="SetProperty" frame="$this" Height="4"/>
+                </State>
+            </StateGroup>
+        </Frame>
+
+        <Frame type="Frame" name="ControlGroupPanel">
+            <Anchor side="Bottom" relative="$parent/InfoPanel" pos="Min" offset="20"/>
+        </Frame>
+
+        <Frame type="Image" name="InfoPanelBackground">
+            <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+
+            <Width val="785"/>
+            <Height val="325"/>
+            <Texture val="Assets\Textures\ui_frame_default_terran.dds"/>
+            <TextureType val="Border"/>
+            <RenderPriority val="100"/>
+            <RenderType val="LDR"/>
+        </Frame>
+
+        <Frame type="Frame" name="InfoPanel">
+            <Anchor side="Top" relative="$parent/InfoPanelBackground" pos="Min" offset="27 "/>
+            <Anchor side="Bottom" relative="$parent/InfoPanelBackground" pos="Max" offset="-21"/>
+            <Anchor side="Left" relative="$parent/InfoPanelBackground" pos="Min" offset="28"/>
+            <Anchor side="Right" relative="$parent/InfoPanelBackground" pos="Max" offset="-28"/>
+
+            <Height val="0"/>
+
+            <Frame type="Frame" name="PortraitContainer">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+
+                <Width val="300"/>
+            </Frame>
+
+            <!-- Override Panel Locations -->
+
+            <Frame type="Frame" name="UnitPanel">
+
+                <Frame type="Frame" name="SquadSizePanel">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="10"/>
+                    <Anchor side="Left" relative="$parent/UnitWireframe" pos="Mid" offset="0"/>
+                    <Anchor side="Right" relative="$parent/UnitWireframe" pos="Mid" offset="0"/>
+
+                    <Height val="55"/>
+                    <Width val="200"/>
+                    <Visible val="False"/>
+
+                    <StateGroup name="SquadSize">
+                        <DefaultState val="FourUnits"/>
+                    
+                        <State name="OneUnit">
+                            <When type="AnimationState" frame="$this" SquadSize="OneUnit"/>
+
+                            <Action type="SetProperty" frame="$this/SquadIcon1" AdjustmentColor="#ActiveColor"/>
+                        </State>
+                    
+                        <State name="TwoUnits">
+                            <When type="AnimationState" frame="$this" SquadSize="TwoUnits"/>
+
+                            <Action type="SetProperty" frame="$this/SquadIcon1" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon2" AdjustmentColor="#ActiveColor"/>
+                        </State>
+                    
+                        <State name="ThreeUnits">
+                            <When type="AnimationState" frame="$this" SquadSize="ThreeUnits"/>
+
+                            <Action type="SetProperty" frame="$this/SquadIcon1" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon2" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon3" AdjustmentColor="#ActiveColor"/>
+                        </State>
+                    
+                        <State name="FourUnits">
+                            <When type="AnimationState" frame="$this" SquadSize="FourUnits"/>
+
+                            <Action type="SetProperty" frame="$this/SquadIcon1" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon2" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon3" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon4" AdjustmentColor="#ActiveColor"/>
+                        </State>
+                    
+                        <State name="FiveUnits">
+                            <When type="AnimationState" frame="$this" SquadSize="FiveUnits"/>
+
+                            <Action type="SetProperty" frame="$this/SquadIcon1" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon2" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon3" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon4" AdjustmentColor="#ActiveColor"/>
+                            <Action type="SetProperty" frame="$this/SquadIcon5" AdjustmentColor="#ActiveColor"/>
+                        </State>
+                    </StateGroup>
+
+                    <StateGroup name="VisibilityState">
+
+                        <State name="NoSelection">
+                            <When type="Property" frame="$parent/$parent/InfoPaneUnit" Visible="False"/>
+
+                            <Action type="SetProperty" frame="$this" Visible="False"/>
+                        </State>
+
+                        <State name="UnitSelected">
+                            <When type="Property" frame="$parent/$parent/InfoPaneUnit" Visible="True"/>
+
+                            <Action type="SetProperty" frame="$this" Visible="True"/>
+                        </State>
+                    </StateGroup>
+
+                    <Frame type="Image" name="SquadIcon1">
+                        <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+
+                        <Texture val="Assets\Textures\ui_console_icon_social_flat.dds"/>
+                        <Width val="40"/>
+                        <Height val="40"/>
+                        <ColorAdjustMode val="Fill"/>
+                        <AdjustmentColor val="#InactiveColor"/>
+                    </Frame>
+
+                    <Frame type="Image" name="SquadIcon2">
+                        <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Left" relative="$sibling-1" pos="Max" offset="0"/>
+
+                        <Texture val="Assets\Textures\ui_console_icon_social_flat.dds"/>
+                        <Width val="40"/>
+                        <Height val="40"/>
+                        <ColorAdjustMode val="Fill"/>
+                        <AdjustmentColor val="#InactiveColor"/>
+                    </Frame>
+
+                    <Frame type="Image" name="SquadIcon3">
+                        <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Left" relative="$sibling-1" pos="Max" offset="0"/>
+
+                        <Texture val="Assets\Textures\ui_console_icon_social_flat.dds"/>
+                        <Width val="40"/>
+                        <Height val="40"/>
+                        <ColorAdjustMode val="Fill"/>
+                        <AdjustmentColor val="#InactiveColor"/>
+                    </Frame>
+
+                    <Frame type="Image" name="SquadIcon4">
+                        <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Left" relative="$sibling-1" pos="Max" offset="0"/>
+
+                        <Texture val="Assets\Textures\ui_console_icon_social_flat.dds"/>
+                        <Width val="40"/>
+                        <Height val="40"/>
+                        <ColorAdjustMode val="Fill"/>
+                        <AdjustmentColor val="#InactiveColor"/>
+                    </Frame>
+
+                    <Frame type="Image" name="SquadIcon5">
+                        <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                        <Anchor side="Left" relative="$sibling-1" pos="Max" offset="0"/>
+
+                        <Texture val="Assets\Textures\ui_console_icon_social_flat.dds"/>
+                        <Width val="40"/>
+                        <Height val="40"/>
+                        <ColorAdjustMode val="Fill"/>
+                        <AdjustmentColor val="#InactiveColor"/>
+                    </Frame>
+                </Frame>
+
+                <!-- Override Panel Locations -->
+
+                <Frame type="UnitWireframe" name="UnitWireframe">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="70"/>
+                    <Anchor side="Left" relative="$parent/$parent/PortraitContainer" pos="Mid" offset="0"/>
+                    <Anchor side="Right" relative="$parent/$parent/PortraitContainer" pos="Mid" offset="0"/>
+                </Frame>
+
+                <Frame type="BehaviorBar" name="BehaviorBar">
+                    <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                    <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                </Frame>
+
+                <Frame type="Label" name="LifeLabel">
+
+                    <Animation name="AutoHide">
+                        <Event event="OnShown" action="Reset,Play" frame="$this"/>
+
+                        <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                            <Key type="Property" time="0.0" value="False"/>
+                        </Controller>
+                    </Animation>
+                </Frame>
+
+                <Frame type="Label" name="ShieldLabel">
+
+                    <Animation name="AutoHide">
+                        <Event event="OnShown" action="Reset,Play" frame="$this"/>
+
+                        <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                            <Key type="Property" time="0.0" value="False"/>
+                        </Controller>
+                    </Animation>
+                </Frame>
+
+                <Frame type="Label" name="EnergyLabel">
+
+                    <Animation name="AutoHide">
+                        <Event event="OnShown" action="Reset,Play" frame="$this"/>
+
+                        <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                            <Key type="Property" time="0.0" value="False"/>
+                        </Controller>
+                    </Animation>
+                </Frame>
+            </Frame>
+
+            <Frame type="Frame" name="InfoPaneUnit">
+                <Width val="430"/>
+
+                <Frame type="Frame" name="NameLabel">
+                    <Anchor side="Left" relative="$parent/$parent/PortraitContainer" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent/$parent/PortraitContainer" pos="Max" offset="0"/>
+                    <Anchor side="Top" relative="$parent/$parent/PortraitContainer" pos="Max" offset="-40"/>
+                </Frame>
+                
+                <Frame type="Label" name="SubtitleLabel">
+                    <Anchor side="Left" relative="$parent/$parent/PortraitContainer" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent/$parent/PortraitContainer" pos="Max" offset="0"/>
+                </Frame>
+
+                <Frame type="Frame" name="InfoContainer">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                </Frame>
+
+                <Frame type="ProgressBar" name="ProgressBar">
+                    <Anchor side="Top" relative="$parent/TypeLabel" pos="Max" offset="4"/>
+                    <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+                    <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+                </Frame>
+            </Frame>
+
+            <Frame type="Frame" name="InfoPaneQueue">
+                <Width val="430"/>
+
+                <Frame type="Frame" name="NameLabel">
+                    <Anchor side="Left" relative="$parent/$parent/PortraitContainer" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent/$parent/PortraitContainer" pos="Max" offset="0"/>
+                    <Anchor side="Top" relative="$parent/$parent/PortraitContainer" pos="Max" offset="-50"/>
+                </Frame>
+
+                <Frame type="Frame" name="QueuePanel">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="75"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                </Frame>
+            </Frame>
+
+            <Frame type="Frame" name="InfoPaneProgress">
+                <Width val="430"/>
+
+                <Frame type="Frame" name="NameLabel">
+                    <Anchor side="Left" relative="$parent/$parent/PortraitContainer" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent/$parent/PortraitContainer" pos="Max" offset="0"/>
+                    <Anchor side="Top" relative="$parent/$parent/PortraitContainer" pos="Max" offset="-50"/>
+                </Frame>
+            </Frame>    
+
+            <Frame type="Frame" name="InfoPaneCargo">
+                <Frame type="Frame" name="NameLabel">
+                    <Anchor side="Left" relative="$parent/$parent/PortraitContainer" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent/$parent/PortraitContainer" pos="Max" offset="0"/>
+                    <Anchor side="Top" relative="$parent/$parent/PortraitContainer" pos="Max" offset="-50"/>
+                </Frame>
+
+                <Frame type="Frame" name="CargoContainer">
+                    <Anchor side="Top" relative="$parent" pos="Min" offset="75"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+                    <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+                </Frame>
+            </Frame>
+
+            <!-- Group Container -->
+
+            <Frame type="Frame" name="InfoPaneInnerContainer">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="34"/>
+                <Anchor side="Bottom" relative="$parent" pos="Max" offset="-34"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="70"/>
+                <Anchor side="Right" relative="$parent" pos="Max" offset="-70"/>
+            </Frame>
+
+            <Frame type="Frame" name="InfoPaneGroup">
+                <Anchor relative="$parent/InfoPaneInnerContainer"/>
+            </Frame>
+        </Frame>
+
+        <Frame type="Frame" name="MinimapPanel">
+            <Width val="332"/>
+    
+            <Frame type="Minimap" name="Minimap">
+                <Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+    
+                <RenderPriority val="500"/>
+                <RenderType val="LDR"/>
+            </Frame>
+            
+            <!-- Hide Unused Buttons-->
+            <Frame type="Button" name="PingButton">
+                <Visible val="False"/>
+            </Frame>
+        
+            <Frame type="Button" name="TerrainButton">
+                <Visible val="False"/>
+            </Frame>
+    
+            <Frame type="Button" name="ColorButton">
+                <Visible val="False"/>
+            </Frame>
+        </Frame>
+
+        <Frame type="Image" name="MinimapPanelBackground">
+            <Anchor side="Top" relative="$parent/MinimapPanel" pos="Min" offset="0"/>
+            <Anchor side="Left" relative="$parent/MinimapPanel" pos="Min" offset="0"/>
+            <Anchor side="Bottom" relative="$parent/MinimapPanel" pos="Max" offset="0"/>
+            <Anchor side="Right" relative="$parent/MinimapPanel" pos="Max" offset="0"/>
+
+            <Texture val="Assets\Textures\ui_frame_default_terran.dds"/>
+            <TextureType val="Border"/>
+            <RenderPriority val="100"/>
+            <RenderType val="HDR"/>
+        </Frame>
+
+        <!-- Command Panel -->
+        <Frame type="Image" name="CommandPanelBackground">
+            <Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+            <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+            <Width val="466"/>
+            <Height val="305"/>
+
+            <Texture val="Assets\Textures\ui_frame_default_terran.dds"/>
+            <TextureType val="Border"/>
+            <RenderPriority val="300"/>
+        </Frame>
+
+        <Frame type="CommandPanel" name="CommandPanel">
+            <Anchor side="Bottom" relative="$parent/CommandPanelBackground" pos="Max" offset="-21"/>
+            <Anchor side="Right" relative="$parent/CommandPanelBackground" pos="Max" offset="-28"/>
+
+            <RenderPriority val="500"/>
+        </Frame>
+        <!--
+        <Anchor side="Top" relative="$parent/InfoPanelBackground" pos="Min" offset="27 "/>
+        <Anchor side="Bottom" relative="$parent/InfoPanelBackground" pos="Max" offset="-21"/>
+        <Anchor side="Left" relative="$parent/InfoPanelBackground" pos="Min" offset="28"/>
+        <Anchor side="Right" relative="$parent/InfoPanelBackground" pos="Max" offset="-28"/>
+        -->
+    </Frame>
+</Desc>

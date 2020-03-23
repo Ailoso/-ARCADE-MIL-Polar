@@ -1,0 +1,184 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Just Another StarCraft II Map
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: KL_CommandPanel
+//--------------------------------------------------------------------------------------------------
+// Structures
+struct lib1_gs_KL_UniStatus {
+    int lv_statusPanel;
+};
+
+// Variable Declarations
+lib1_gs_KL_UniStatus lib1_gv_kL_UnitStatus;
+
+// Trigger Declarations
+trigger lib1_gt_KL_InitUnitStatus;
+trigger lib1_gt_Init;
+trigger lib1_gt_Test;
+
+// Library Initialization
+void lib1_InitVariables ();
+
+//--------------------------------------------------------------------------------------------------
+// Library: KL_CommandPanel
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void lib1_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Variable Initialization
+bool lib1_InitVariables_completed = false;
+
+void lib1_InitVariables () {
+    if (lib1_InitVariables_completed) {
+        return;
+    }
+
+    lib1_InitVariables_completed = true;
+
+    lib1_gv_kL_UnitStatus.lv_statusPanel = c_invalidDialogControlId;
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: KL_InitUnitStatus
+//--------------------------------------------------------------------------------------------------
+bool lib1_gt_KL_InitUnitStatus_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    DialogControlHookupStandard(c_triggerControlTypeUnitStatus, "$parent/GameUI/UIContainer/ConsoleUIContainer/StatusPanel");
+    lib1_gv_kL_UnitStatus.lv_statusPanel = DialogControlLastCreated();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib1_gt_KL_InitUnitStatus_Init () {
+    lib1_gt_KL_InitUnitStatus = TriggerCreate("lib1_gt_KL_InitUnitStatus_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Init
+//--------------------------------------------------------------------------------------------------
+bool lib1_gt_Init_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(lib1_gt_KL_InitUnitStatus, true, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib1_gt_Init_Init () {
+    lib1_gt_Init = TriggerCreate("lib1_gt_Init_Func");
+    TriggerAddEventMapInit(lib1_gt_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Test
+//--------------------------------------------------------------------------------------------------
+bool lib1_gt_Test_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((TriggerIsEnabled(TriggerGetCurrent()) == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerEnable(TriggerGetCurrent(), false);
+    libNtve_gf_SetDialogItemUnit(lib1_gv_kL_UnitStatus.lv_statusPanel, EventUnit(), PlayerGroupSingle(EventPlayer()));
+    Wait(0.0001, c_timeGame);
+    TriggerEnable(TriggerGetCurrent(), true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib1_gt_Test_Init () {
+    lib1_gt_Test = TriggerCreate("lib1_gt_Test_Func");
+    TriggerAddEventUnitSelected(lib1_gt_Test, null, c_playerAny, true);
+}
+
+void lib1_InitTriggers () {
+    lib1_gt_KL_InitUnitStatus_Init();
+    lib1_gt_Init_Init();
+    lib1_gt_Test_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool lib1_InitLib_completed = false;
+
+void lib1_InitLib () {
+    if (lib1_InitLib_completed) {
+        return;
+    }
+
+    lib1_InitLib_completed = true;
+
+    lib1_InitLibraries();
+    lib1_InitVariables();
+    lib1_InitTriggers();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+    lib1_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_UntitledTrigger001;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 001
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger001_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger001_Init () {
+    gt_UntitledTrigger001 = TriggerCreate("gt_UntitledTrigger001_Func");
+    TriggerAddEventMapInit(gt_UntitledTrigger001);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_UntitledTrigger001_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitTriggers();
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Terrain id="Haven"/>
+<Unit id="CommandCenter"/>
+<Unit id="SCV"/>
+<Unit id="Marine"/>
+<Unit id="Medivac"/>
+<Unit id="Zealot"/>
+<Unit id="HighTemplar"/>
+<Unit id="Zergling"/>
+</Preload>

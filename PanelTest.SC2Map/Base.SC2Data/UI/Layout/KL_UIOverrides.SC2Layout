@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Frame" name="GameUI/UIContainer/ConsolePanel" file="GameUI">
+        <Visible val="False"/>
+
+        <Frame type="Portrait" name="PortraitPanel">
+            <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+            <RenderType val="LDR"/>
+            <RenderPriority val="900"/>
+
+            <Visible val="False"/>
+
+            <Animation name="AutoHide">
+                <Event event="OnShown" action="Reset,Play" frame="$this"/>
+
+                <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                    <Key type="Property" time="0.0" value="False"/>
+                </Controller>
+            </Animation>
+        </Frame>
+
+        <Frame type="Frame" name="InfopanelModel">
+            <Visible val="False"/>
+
+            <Animation name="AutoHide">
+                <Event event="OnShown" action="Reset,Play" frame="$this"/>
+    
+                <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                    <Key type="Property" time="0.001" value="False"/>
+                </Controller>
+            </Animation>
+        </Frame>
+
+        <Frame type="Frame" name="MinimapModel">
+            <Visible val="False"/>
+
+            <Animation name="AutoHide">
+                <Event event="OnShown" action="Reset,Play" frame="$this"/>
+    
+                <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                    <Key type="Property" time="0.001" value="False"/>
+                </Controller>
+            </Animation>
+        </Frame>
+
+        <Frame type="Frame" name="CommandPanelModel">
+            <Visible val="False"/>
+
+            <Animation name="AutoHide">
+                <Event event="OnShown" action="Reset,Play" frame="$this"/>
+    
+                <Controller type="Property" end="Pause" frame="$this" property="Visible">
+                    <Key type="Property" time="0.001" value="False"/>
+                </Controller>
+            </Animation>
+        </Frame>
+    </Frame>
+
+    <Frame type="GameUI" name="GameUI" file="GameUI">
+        <ConsoleWorldBottomOffset val="0"/>
+    </Frame>
+</Desc>

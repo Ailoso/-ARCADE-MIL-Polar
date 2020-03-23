@@ -1,0 +1,9 @@
+﻿Category/Name/lib_1_E58655B3=UnitStatus
+Library/Name/1=KL_CommandPanel
+Structure/Name/lib_1_C01991EE=KL_UniStatus
+Trigger/Name/C513DC5F=Untitled Trigger 001
+Trigger/Name/lib_1_62D0FD1B=Test
+Trigger/Name/lib_1_7441268F=KL_InitUnitStatus
+Trigger/Name/lib_1_9F4639C2=Init
+Variable/Name/lib_1_570635BE=KL_UnitStatus
+Variable/Name/lib_1_7D911ABD=StatusPanel
